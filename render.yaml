@@ -1,0 +1,25 @@
+services:
+  # Веб-приложение React
+  - type: web
+    name: ellinprincess-web
+    env: static
+    buildCommand: npm run build
+    staticPublishPath: ./build
+    pullRequestPreviewsEnabled: false
+    envVars:
+      - key: NODE_VERSION
+        value: 16.14.0
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # API сервер для Telegram бота
+  - type: web
+    name: ellinprincess-bot-api
+    env: node
+    buildCommand: cd telegram-bot-server && npm install
+    startCommand: cd telegram-bot-server && npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 16.14.0
